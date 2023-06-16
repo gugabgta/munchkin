@@ -1,0 +1,16 @@
+{
+  "name": "munchkin",
+  "version": "1.0.0",
+  "description": "Munchking card game back end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "tsc --watch --project .",
+    "dev": "node dist/index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.3.1"
+  }
+}

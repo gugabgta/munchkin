@@ -1,0 +1,206 @@
+[
+    {
+        "type": "Monster",
+        "title": "Dragão de Plutônio",
+        "category": "Door",
+        "description": "Um dragão de Plutônio ué.",
+        "power": 20,
+        "expansion": "Vanilla",
+        "effect": "NoEffect",
+        "bad_stuff": "Death"
+    },
+    {
+        "type": "Equipment",
+        "title": "Excalibur",
+        "category": "Treasure",
+        "description": "The legendary sword of King Arthur.",
+        "power": 4,
+        "expansion": "Vanilla",
+        "hands": 2,
+        "effect": "NoEffect"
+    },
+    {
+        "type": "InstantUse",
+        "title": "Novo Mestre Ingênuo",
+        "category": "Treasure",
+        "description": "Suba +1 Nivel.",
+        "power": 1,
+        "expansion": "Vanilla",
+        "effect": "LevelUp"
+    },
+    {
+        "type": "InstantUse",
+        "title": "Anel do desejo",
+        "category": "Treasure",
+        "description": "Cancele qualquer Maldição. Use a qualquer momento. Uso Único.",
+        "power": 1,
+        "expansion": "Vanilla",
+        "effect": "CurseBreaker"
+    },
+    {
+        "type": "SingleUse",
+        "title": "Cupom do Rei do Cupom",
+        "category": "Treasure",
+        "description": "descrição muito grande...",
+        "power": 1,
+        "expansion": "Vanilla",
+        "effect": "GoldVoucher"
+    },
+    {
+        "type": "Equipment",
+        "title": "Chapéu Magnífico",
+        "category": "Treasure",
+        "description": "descrição muito grande...",
+        "power": 2,
+        "expansion": "Vanilla",
+        "place": "Head",
+        "effect": "WonderfulHat"
+    },
+    {
+        "type": "InstantUse",
+        "title": "Poção de Inocência",
+        "category": "Treasure",
+        "description": "-1 para fugir de um monstro. +2 para qualquer um dos lados",
+        "power": 2,
+        "expansion": "Vanilla",
+        "effect": "InocencePotion"
+    },
+    {
+        "type": "Equipment",
+        "title": "Espada de duas mãos",
+        "category": "Treasure",
+        "description": "Uma arma de uma mão, com duas mãos.",
+        "power": 0,
+        "expansion": "Vanilla",
+        "place": "Hands",
+        "effect": "PlusOneHand"
+    },
+    {
+        "type": "SingleUse",
+        "title": "Pato da surpresa",
+        "category": "Treasure",
+        "description": "Faz um monte de coisa.",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "SurpriseDuck"
+    },
+    {
+        "type": "Squire",
+        "title": "Empregada",
+        "category": "Door",
+        "description": "A gazebo that brings dread.",
+        "power": 1,
+        "expansion": "Vanilla",
+        "effect": "PlusOneBodyPiece"
+    },
+    {
+        "type": "InstantUse",
+        "title": "Ovos de Dinossauro",
+        "category": "Treasure",
+        "description": "+3 para qualquer um dos lados.",
+        "power": 3,
+        "expansion": "Vanilla",
+        "effect": "BattleBuff"
+    },
+    {
+        "type": "InstantUse",
+        "title": "Pegadas de Dinossauro",
+        "category": "Treasure",
+        "description": "+2 para qualquer um dos lados.",
+        "power": 2,
+        "expansion": "Vanilla",
+        "effect": "BattleBuff"
+    },
+    {
+        "type": "Equipment",
+        "title": "Escada de Mão",
+        "category": "Treasure",
+        "description": "",
+        "power": 3,
+        "expansion": "Vanilla",
+        "place": "Hands",
+        "effect": "HalflingOnly"
+    },
+    {
+        "type": "Field",
+        "title": "Dragão de Montaria",
+        "category": "Treasure",
+        "description": "Ampliadores de Montaria não funcionam",
+        "power": 5,
+        "expansion": "Vanilla",
+        "effect": "MountDragon"
+    },
+    {
+        "type": "InstantUse",
+        "title": "Tamanho Avantajado",
+        "category": "Door",
+        "description": "+5 para o Monstro",
+        "power": 5,
+        "expansion": "Vanilla",
+        "effect": "MonsterBuff"
+    },
+    {
+        "type": "InstantUse",
+        "title": "Meio-...",
+        "category": "Door",
+        "description": "-5 para o Monstro",
+        "power": 5,
+        "expansion": "Vanilla",
+        "effect": "MonsterDebuff"
+    },
+    {
+        "type": "SingleUse",
+        "title": "Isso é Trapaça",
+        "category": "Door",
+        "description": "isso é trapaça!",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Cheat"
+    },
+    {
+        "type": "Curse",
+        "title": "Tem uma colmeia nas minhas meias",
+        "category": "Door",
+        "description": "perca o calçado",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "LoseFootwearOrLoseLevel"
+    },
+    {
+        "type": "Monster",
+        "category": "Door",
+        "title": "Guerreiro de Brinquedo",
+        "description": "ele é fofo",
+        "power": 2,
+        "expansion": "Vanilla",
+        "effect": "GiveCards",
+        "bad_stuff": "LoseLevel"
+    },
+    {
+        "type": "Field",
+        "title": "Mestiço",
+        "category": "Door",
+        "description": "Agora voce pode ter duas raças",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "CrossBreed"
+    },
+    {
+        "type": "Field",
+        "title": "Halfling",
+        "category": "Door",
+        "description": "Halfling",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Halfling"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior",
+        "category": "Door",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    }
+]
