@@ -1,12 +1,16 @@
 import { Card, CardType, Category, Expansion } from './Card'
-import { helpers } from './Helpers'
+import { Helpers } from './Helpers'
 
 class Deck {
     door: Array<Card>
     treasure: Array<Card>
+    door_discard: Array<Card>
+    treasure_discard: Array<Card>
     constructor() {
         this.door = []
+        this.door_discard = []
         this.treasure = []
+        this.treasure_discard = []
     }
     push(card: Card): void {
         if (card.category === Category.Door) {
@@ -19,16 +23,16 @@ class Deck {
     }
     shuffle(category: Category = Category.Any): void {
         if (category === Category.Any) {
-            this.door = helpers.shuffle(this.door)
-            this.treasure = helpers.shuffle(this.treasure)
+            this.door = Helpers.shuffle(this.door)
+            this.treasure = Helpers.shuffle(this.treasure)
         }
 
         if (category === Category.Door) {
-            this.door = helpers.shuffle(this.door)
+            this.door = Helpers.shuffle(this.door)
         }
 
         if (category === Category.Treasure) {
-            this.treasure = helpers.shuffle(this.treasure)
+            this.treasure = Helpers.shuffle(this.treasure)
         }
     }
 }

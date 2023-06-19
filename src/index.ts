@@ -16,12 +16,12 @@ cards.forEach(card => {
 })
 
 const players = [
-    new Player('Player 1'),
-    new Player('Player 2'),
-    new Player('Player 3')
+    new Player('Gustavo'),
+    new Player('Naruto'),
+    new Player('Aline'),
 ];
 
-const game = new Game(deck)
+const game = new Game(deck, players[0])
 
 players.forEach(player => {
     game.assignPlayer(player)
@@ -29,6 +29,8 @@ players.forEach(player => {
 
 game.setup()
 
-game.players[0].cards.forEach(card => {
-    console.log(`${card.title} | ${card.category}`)
-})
+// game.players[0].cards.forEach(card => {
+//     console.log(`${card.title} | ${card.category}`)
+// })
+
+game.start()

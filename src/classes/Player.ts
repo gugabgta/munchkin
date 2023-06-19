@@ -1,6 +1,6 @@
 import { Card, CardType, Category, Expansion } from './Card'
 import { Deck } from './Deck'
-import { helpers } from './Helpers'
+import { Helpers } from './Helpers'
 import { Curse } from './CardTypes/Curse'
 
 class Player {
@@ -28,7 +28,7 @@ class Player {
         }
     }
     shuffleCards() {
-        this.cards = helpers.shuffle(this.cards)
+        this.cards = Helpers.shuffle(this.cards)
     }
 }
 

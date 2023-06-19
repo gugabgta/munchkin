@@ -1,5 +1,5 @@
 class Helpers {
-    shuffle(array: Array<any>): Array<any> {
+    static shuffle(array: Array<any>): Array<any> {
         let current_index = array.length, random_index
         while (current_index != 0) {
             random_index = Math.floor(Math.random() * current_index)
@@ -8,8 +8,10 @@ class Helpers {
         }
         return array
     }
+
+    static camelCase(str: string): string {
+        return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase())
+    }
 }
 
-const helpers = new Helpers()
-
-export { helpers }
+export { Helpers }
