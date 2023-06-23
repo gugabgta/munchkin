@@ -1,21 +1,21 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { ServerToClientEvents, ClientToServerEvents, InterServerEvents, SocketData } from "./socketEvents"
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
+const server_options = {
     cors: {
-        // ["http://localhost:8080", "http://localhost:8081"]
-        origin: true
+        origin: true // ["http://localhost:8080", "http://localhost:8081"]
     }
-});
-
-io.on("connection", socket => {
-    socket.on("hello", (arg) => {
-      console.log(arg)
-    });
-});
+}
+const io = new Server/*<
+    ServerToClientEvents,
+    ClientToServerEvents,
+    InterServerEvents,
+    SocketData
+>*/(httpServer, server_options);
 
 httpServer.listen(3000);
 

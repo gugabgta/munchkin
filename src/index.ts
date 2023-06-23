@@ -1,48 +1,60 @@
-// import { Card } from "./classes/Card"
-// import { Game } from "./classes/Game"
-// import { Deck } from "./classes/Deck"
-// import { Player } from "./classes/Player"
-// import { JsonParser } from "./parsers/JsonParser"
-// import * as fs from 'fs'
+import { Card } from "./classes/Card"
+import { Game } from "./classes/Game"
+import { Deck } from "./classes/Deck"
+import { Player } from "./classes/Player"
+import { JsonParser } from "./parsers/JsonParser"
+import * as fs from 'fs'
+import { io } from "./server/app"
+import { ServerToClientEvents as Events } from "./server/socketEvents"
 
-// let cards: Array<Card> = JSON.parse(fs.readFileSync('cards/sampleCards.json', 'utf8'))
-// cards = new JsonParser().parse(cards)
-// const deck = new Deck()
+let cards: Array<Card> = JSON.parse(fs.readFileSync('cards/sampleCards.json', 'utf8'))
+cards = new JsonParser().parse(cards)
+const deck = new Deck()
 
-// cards.forEach(card => {
-//     deck.push(card)
-//     deck.push(card)
-//     deck.push(card)
-// })
-
-// const players = [
-//     new Player('Gustavo'),
-//     new Player('Naruto'),
-//     new Player('Aline'),
-// ];
-
-// const game = new Game(deck, players[0])
-
-// players.forEach(player => {
-//     game.assignPlayer(player)
-// })
-
-// game.setup()
-
-// game.players[0].cards.forEach(card => {
-//     console.log(`${card.title} | ${card.category}`)
-// })
-
-// game.start()
-
-import { httpServer, io } from "./server/app"
-
-console.log ('ta belezinha')
+let players: Array<Player> = [];
 
 io.on("connection", socket => {
-    console.log("a user connected");
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-    });
+    socket.on("join", (name: string) => {
+        players.push(new Player(name))
+        console.log(players)
+    })
+    // socket.on("text", sendCardsToClient )
+    socket.on("start", startGame )
+});
+
+// io.on("connection", socket => {
+//     console.log("a user connected" + socket);
+//     socket.on("disconnect", () => {
+//         console.log("user disconnected");
+//     });
+// })
+
+cards.forEach(card => {
+    deck.push(card)
 })
 
+
+
+
+
+
+// game.players[0].cards.forEach(card => {
+//     io.emit('server_response', `${card.title} | ${card.category}`)
+// })
+
+// function sendCardsToClient(game: Game): void {
+    // game.players.forEach(player => {
+    //     io.emit('server_response', `${player.name} | ${player.cards.length}`)
+    // })
+// }
+
+function startGame(): void {
+    const game = new Game(deck, players[0])
+
+    players.forEach(player => {
+        game.assignPlayer(player)
+    })
+
+    game.setup()
+}
+// game.start()

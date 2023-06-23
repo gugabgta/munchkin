@@ -3,6 +3,8 @@ import { Helpers } from './Helpers'
 import { Player } from './Player'
 import { Deck } from './Deck'
 import readline from 'readline-sync'
+import { io } from "../server/app"
+import { Server } from "socket.io";
 
 export class Game {
     turn: number;
@@ -10,16 +12,20 @@ export class Game {
     active_player: Player
     deck: Deck
     phase: GamePhase
+    io: Server
     constructor(deck: Deck, first_player: Player) {
         this.turn = 0
         this.players = []
         this.active_player = first_player
         this.deck = deck
         this.phase = GamePhase.Initial
+        this.io = io
     }
+
     assignPlayer(player: Player): void {
         this.players.push(player)
     }
+
     setup(cards_per_player: number = 4): void {
         if (this.players.length < 2) {
             throw new Error('You need at least 2 players to start the game')
@@ -36,6 +42,7 @@ export class Game {
             player.shuffleCards()
         })
     }
+
     changeActivePlayer(): void {
         const active_player_index: number = this.players.indexOf(this.active_player) ?? 0
         this.players[active_player_index].active = false
@@ -44,6 +51,7 @@ export class Game {
         this.players[next_player_index].active = true
         this.active_player = this.players[next_player_index]
     }
+
     changeGamePhase(): void {
         // if (this.phase === GamePhase.Final) {
         //     this.phase = GamePhase.Initial
@@ -51,6 +59,7 @@ export class Game {
         // }
         // this.phase += 1
     }
+
     kickOpenTheDoor(): void {
         const drawn_card = this.deck.door.pop()
         if (drawn_card?.type === CardType.Monster) {
@@ -58,47 +67,61 @@ export class Game {
         }
         console.log()
     }
+
     LookForTrouble(): void {
         console.log('LookForTrouble')
         let card = this.promptCardsToPlay()
         if (card?.type !== CardType.Monster) {}
     }
+
     EquipItem(): void {
         console.log('EquipItem')
     }
+
     FightTheMonster(): void {
         console.log('FightTheMonster')
     }
+
     JoinCombat(): void {
         console.log('JoinCombat')
     }
+
     DeclineToHelp(): void {
         console.log('DeclineToHelp')
     }
+
     AskForHelp(): void {
         console.log('AskForHelp')
     }
+
     UseItem(): void {
         console.log('UseItem')
     }
+
     RunAway(): void {
         console.log('RunAway')
     }
+
     ShareTheLoot(): void {
         console.log('ShareTheLoot')
     }
+
     SayGGEZ(): void {
         console.log('SayGGEZ')
     }
+
     Bargain(): void {
         console.log('Bargain')
     }
+
     SellItems(): void {
         console.log('SellItems')
     }
+
     EndTurn(): void {
         console.log('EndTurn')
     }
+
     start(): void {
         while (true) {
             let p = this.active_player.name
@@ -140,6 +163,15 @@ export class Game {
         let res: string = readline.question(`choose a card to play: \n${cards_to_play_string}`);
         return player_cards[parseInt(res)]
     }
+
+    this.io.on("connection", socket => {
+        socket.on("join", (name: string) => {
+            players.push(new Player(name))
+            console.log(players)
+        })
+        // socket.on("text", sendCardsToClient )
+        socket.on("start", startGame )
+    });
 }
 
 enum GamePhase {
@@ -151,7 +183,7 @@ enum GamePhase {
     Final = 'Final',
 }
 
-enum GameActions {
+export enum GameActions {
     KickOpenTheDoor,
     LookForTrouble,
     EquipItem,
