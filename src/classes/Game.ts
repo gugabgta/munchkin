@@ -3,23 +3,24 @@ import { Helpers } from './Helpers'
 import { Player } from './Player'
 import { Deck } from './Deck'
 import readline from 'readline-sync'
-import { io } from "../server/app"
-import { Server } from "socket.io";
+import io from "../server/app"
+import SocketHandler from '../server/SocketHandler'
 
-export class Game {
+export default class Game {
     turn: number;
     players: Array<Player>
-    active_player: Player
+    active_player: Player | undefined
+    running: boolean
     deck: Deck
     phase: GamePhase
-    io: Server
-    constructor(deck: Deck, first_player: Player) {
+    sh: SocketHandler
+    constructor(deck: Deck) {
+        this.running = false
         this.turn = 0
         this.players = []
-        this.active_player = first_player
         this.deck = deck
         this.phase = GamePhase.Initial
-        this.io = io
+        this.sh = new SocketHandler(this, io)
     }
 
     assignPlayer(player: Player): void {
@@ -44,7 +45,10 @@ export class Game {
     }
 
     changeActivePlayer(): void {
-        const active_player_index: number = this.players.indexOf(this.active_player) ?? 0
+        if (!this.active_player) {
+            throw new Error('No active player')
+        }
+        const active_player_index: number = this.players.indexOf(this.active_player)
         this.players[active_player_index].active = false
 
         const next_player_index: number = active_player_index + 1 >= this.players.length ? 0 : active_player_index + 1
@@ -123,39 +127,41 @@ export class Game {
     }
 
     start(): void {
-        while (true) {
-            let p = this.active_player.name
+            // let p = this.active_player.name
             // let res: string = readline.question(`What will ${p} do during the ${this.phase} phase?\n`);
             // let action: GameActions = GameActions[res]
-            let res = GameActions['LookForTrouble']
+            // let res = GameActions['LookForTrouble']
 
             // console.log(Object.keys(allowed_actions[this.phase]).includes(res))
-            if (!allowed_actions[this.phase].includes(res)) {
-                console.log('Invalid action')
-                break
+            // if (!allowed_actions[this.phase].includes(res)) {
+            //     console.log('Invalid action')
+            //     break
                 // continue
-            }
-            let method_map = {
-                [GameActions.KickOpenTheDoor]: this.kickOpenTheDoor,
-                [GameActions.LookForTrouble]: this.LookForTrouble,
-                [GameActions.EquipItem]: this.EquipItem,
-                [GameActions.FightTheMonster]: this.FightTheMonster,
-                [GameActions.JoinCombat]: this.JoinCombat,
-                [GameActions.DeclineToHelp]: this.DeclineToHelp,
-                [GameActions.AskForHelp]: this.AskForHelp,
-                [GameActions.UseItem]: this.UseItem,
-                [GameActions.RunAway]: this.RunAway,
-                [GameActions.ShareTheLoot]: this.ShareTheLoot,
-                [GameActions.SayGGEZ]: this.SayGGEZ,
-                [GameActions.Bargain]: this.Bargain,
-                [GameActions.SellItems]: this.SellItems,
-                [GameActions.EndTurn]: this.EndTurn,
-            }
-            method_map[res].call(this)
-            break;
-        }
+            // }
+        //     let method_map = {
+        //         [GameActions.KickOpenTheDoor]: this.kickOpenTheDoor,
+        //         [GameActions.LookForTrouble]: this.LookForTrouble,
+        //         [GameActions.EquipItem]: this.EquipItem,
+        //         [GameActions.FightTheMonster]: this.FightTheMonster,
+        //         [GameActions.JoinCombat]: this.JoinCombat,
+        //         [GameActions.DeclineToHelp]: this.DeclineToHelp,
+        //         [GameActions.AskForHelp]: this.AskForHelp,
+        //         [GameActions.UseItem]: this.UseItem,
+        //         [GameActions.RunAway]: this.RunAway,
+        //         [GameActions.ShareTheLoot]: this.ShareTheLoot,
+        //         [GameActions.SayGGEZ]: this.SayGGEZ,
+        //         [GameActions.Bargain]: this.Bargain,
+        //         [GameActions.SellItems]: this.SellItems,
+        //         [GameActions.EndTurn]: this.EndTurn,
+        //     }
+        //     method_map[res].call(this)
+        //     break;
+        // }
     }
     promptCardsToPlay(): Card {
+        if (!this.active_player) {
+            throw new Error('No active player')
+        }
         const player_cards = this.active_player.cards
         const cards_to_play_string = player_cards.reduce((acc, card, index) => {
             return `${acc} ${index}: ${card.title}\n`
@@ -163,15 +169,6 @@ export class Game {
         let res: string = readline.question(`choose a card to play: \n${cards_to_play_string}`);
         return player_cards[parseInt(res)]
     }
-
-    this.io.on("connection", socket => {
-        socket.on("join", (name: string) => {
-            players.push(new Player(name))
-            console.log(players)
-        })
-        // socket.on("text", sendCardsToClient )
-        socket.on("start", startGame )
-    });
 }
 
 enum GamePhase {

@@ -5,6 +5,7 @@ import { Curse } from './CardTypes/Curse'
 
 class Player {
     name: string
+    id: string
     level: number = 1
     power: number = 0
     body: Body = new Body()
@@ -16,9 +17,11 @@ class Player {
     gender: Gender = Gender.Male
     class: Array<Class> = []
     race: Array<Race> = [Race.Human]
-    constructor(name: string) {
+    constructor(name: string, id: string) {
         this.name = name
+        this.id = id
     }
+
     drawCard(deck: Deck, category: Category) {
         if (category === Category.Door) {
             this.cards.push(deck.door.pop() as Card)
@@ -27,6 +30,7 @@ class Player {
             this.cards.push(deck.treasure.pop() as Card)
         }
     }
+
     shuffleCards() {
         this.cards = Helpers.shuffle(this.cards)
     }
