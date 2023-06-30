@@ -44,6 +44,10 @@ export default class Game {
         })
     }
 
+    isActivePlayer(socket_id: string): boolean {
+        return this.active_player == this.players.find(player => player.id === socket_id)
+    }
+
     changeActivePlayer(): void {
         if (!this.active_player) {
             throw new Error('No active player')
@@ -74,7 +78,6 @@ export default class Game {
 
     LookForTrouble(): void {
         console.log('LookForTrouble')
-        let card = this.promptCardsToPlay()
         if (card?.type !== CardType.Monster) {}
     }
 
@@ -158,20 +161,9 @@ export default class Game {
         //     break;
         // }
     }
-    promptCardsToPlay(): Card {
-        if (!this.active_player) {
-            throw new Error('No active player')
-        }
-        const player_cards = this.active_player.cards
-        const cards_to_play_string = player_cards.reduce((acc, card, index) => {
-            return `${acc} ${index}: ${card.title}\n`
-        }, '')
-        let res: string = readline.question(`choose a card to play: \n${cards_to_play_string}`);
-        return player_cards[parseInt(res)]
-    }
 }
 
-enum GamePhase {
+export enum GamePhase {
     Initial = 'Initial',
     Combat = 'Combat',
     SpoilTheDungeon = 'SpoilTheDungeon',
@@ -197,7 +189,7 @@ export enum GameActions {
     EndTurn,
 }
 
-const allowed_actions: Record<GamePhase, Array<GameActions>> = {
+export const allowed_actions: Record<GamePhase, Array<GameActions>> = {
     [GamePhase.Initial]: [
         GameActions.KickOpenTheDoor,
         GameActions.LookForTrouble,

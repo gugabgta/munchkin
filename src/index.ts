@@ -7,6 +7,7 @@ import * as fs from 'fs'
 
 let cards: Array<Card> = JSON.parse(fs.readFileSync('cards/sampleCards.json', 'utf8'))
 cards = new JsonParser().parse(cards)
+
 const deck = new Deck()
 cards.forEach(card => {
     deck.push(card)

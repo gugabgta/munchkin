@@ -1,4 +1,4 @@
-import Game from "../classes/Game";
+import Game, { GamePhase, GameActions, allowed_actions } from "../classes/Game";
 import { Player } from "../classes/Player";
 import { Server } from "socket.io";
 
@@ -20,6 +20,7 @@ export default class SocketHandler {
             socket.on("disconnect", this.disconnected);
             socket.on("showCards", this.sendCardsToClient.bind(this))
             socket.on("start", this.startGame.bind(this))
+            socket.on("playCard", this.playCard.bind(this))
         })
     }
 
@@ -42,10 +43,15 @@ export default class SocketHandler {
     }
 
     startGame(): void {
-        console.log('hello :c')
         this.lobby.forEach(player => {
             this.game.assignPlayer(player)
         })
         this.game.setup()
+    }
+
+    playCard(socket_id: string, card_id: string): void {
+        if (this.game.isActivePlayer(socket_id)) {
+
+        }
     }
 }

@@ -18,6 +18,7 @@ interface ServerToClientEvents {
     start: () => void
     cards: (cards: Array<Card>) => void
     showCards: (socket_id: string) => void
+    playCard: (socket_id: string, card_id: string) => void
 }
 
 const io = new Server<ServerToClientEvents>(httpServer, server_options);

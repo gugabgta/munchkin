@@ -1,4 +1,7 @@
+import { Helpers } from "./Helpers"
+
 interface Card {
+    id: string,
     title: string
     description: string
     type: CardType
@@ -36,7 +39,9 @@ class Card {
         public category: Category,
         public type: CardType,
         public expansion: Expansion,
-    ) {}
+    ) {
+        this.id = Helpers.uuidv4()
+    }
 }
 
 export { Card, CardType, Category, Expansion }
