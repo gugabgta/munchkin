@@ -20,6 +20,10 @@ class Helpers {
             return v.toString(16)
         })
     }
+
+    static sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
 
 export { Helpers }

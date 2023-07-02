@@ -35,6 +35,15 @@ class Deck {
             this.treasure = Helpers.shuffle(this.treasure)
         }
     }
+    pushToDiscard(card: Card): void {
+        if (card.category === Category.Door) {
+            this.door_discard.push(card)
+        }
+
+        if (card.category === Category.Treasure) {
+            this.treasure_discard.push(card)
+        }
+    }
 }
 
 export { Deck }

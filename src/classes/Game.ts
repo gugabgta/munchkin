@@ -78,7 +78,6 @@ export default class Game {
 
     LookForTrouble(): void {
         console.log('LookForTrouble')
-        if (card?.type !== CardType.Monster) {}
     }
 
     EquipItem(): void {

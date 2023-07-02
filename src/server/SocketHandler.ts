@@ -1,4 +1,4 @@
-import Game, { GamePhase, GameActions, allowed_actions } from "../classes/Game";
+import Game from "../classes/Game";
 import { Player } from "../classes/Player";
 import { Server } from "socket.io";
 
@@ -15,9 +15,14 @@ export default class SocketHandler {
 
     setupEvents(): void {
         this.io.on("connection", socket => {
-            console.log("a user connected");
             socket.on("join", this.joined.bind(this))
-            socket.on("disconnect", this.disconnected);
+            socket.on("disconnect", (reason) => {
+                if (reason === 'server shutting down') {
+                    return
+                }
+                console.error('something went wrong: ', reason)
+                this.lobby = this.lobby.filter(player => player.id !== socket.id) ?? []
+            });
             socket.on("showCards", this.sendCardsToClient.bind(this))
             socket.on("start", this.startGame.bind(this))
             socket.on("playCard", this.playCard.bind(this))
@@ -25,12 +30,24 @@ export default class SocketHandler {
     }
 
     joined(socket_id: string, name: string): void {
+        console.log(`${name} joined the lobby`)
         this.lobby.push(new Player(name, socket_id))
-        console.log(`${name} joined!`)
+        this.lobbyState()
     }
 
-    disconnected(): void {
-        console.log("user disconnected");
+    lobbyState(): void {
+        const message = this.lobby.map(player => {
+            return `${player.name} - ${player.id}`
+        })
+        this.io.emit('lobby_state', message)
+    }
+
+    disconnected(reason: string): void {
+        if (this.lobby === undefined) {
+            console.log(this)
+            console.error('something went wrong: ', reason)
+        }
+        // this.lobby = this.lobby.filter(player => player.id !== this.socket.id) ?? []
     }
 
     sendCardsToClient(socket_id: string): void {
@@ -51,7 +68,7 @@ export default class SocketHandler {
 
     playCard(socket_id: string, card_id: string): void {
         if (this.game.isActivePlayer(socket_id)) {
-
+            card_id
         }
     }
 }

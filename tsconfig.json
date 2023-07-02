@@ -21,7 +21,8 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "esModuleInterop": true,
-        "noUnusedLocals": false
+        "noUnusedLocals": false,
+        "moduleResolution": "Node"
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "**/*.spec.ts"]
