@@ -2,7 +2,6 @@ import { Card, CardType, Category, Expansion } from './Card'
 import { Helpers } from './Helpers'
 import { Player } from './Player'
 import { Deck } from './Deck'
-import readline from 'readline-sync'
 import io from "../server/app"
 import SocketHandler from '../server/SocketHandler'
 
@@ -14,25 +13,28 @@ export default class Game {
     deck: Deck
     phase: GamePhase
     sh: SocketHandler
-    constructor(deck: Deck) {
+    constructor(deck: Deck, port: number = 3000) {
         this.running = false
         this.turn = 0
         this.players = []
         this.deck = deck
         this.phase = GamePhase.Initial
-        this.sh = new SocketHandler(this, io)
+        this.sh = new SocketHandler(this, io(port))
     }
 
     assignPlayer(player: Player): void {
         this.players.push(player)
     }
 
-    setup(cards_per_player: number = 4): void {
-        if (this.players.length < 2) {
-            throw new Error('You need at least 2 players to start the game')
+    setup(cards_per_player: number = 4, shuffle: boolean = true): void {
+        if (this.players.length < 3) {
+            throw new Error('You need at least 3 players to start the game')
         }
 
-        this.deck.shuffle()
+        if (shuffle) {
+            this.deck.shuffle()
+        }
+
         this.players[0].active = true
 
         this.players.forEach(player => {
@@ -40,7 +42,9 @@ export default class Game {
                 player.drawCard(this.deck, Category.Door)
                 player.drawCard(this.deck, Category.Treasure)
             }
-            player.shuffleCards()
+            if (shuffle) {
+                player.shuffleCards()
+            }
         })
     }
 

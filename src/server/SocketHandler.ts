@@ -42,14 +42,6 @@ export default class SocketHandler {
         this.io.emit('lobby_state', message)
     }
 
-    disconnected(reason: string): void {
-        if (this.lobby === undefined) {
-            console.log(this)
-            console.error('something went wrong: ', reason)
-        }
-        // this.lobby = this.lobby.filter(player => player.id !== this.socket.id) ?? []
-    }
-
     sendCardsToClient(socket_id: string): void {
         console.log('sending cards to client ' + socket_id)
         const player = this.game.players.find(player => player.id === socket_id)
@@ -59,11 +51,12 @@ export default class SocketHandler {
         this.io.to(socket_id).emit('cards', player.cards)
     }
 
-    startGame(): void {
+    startGame(shuffle: boolean = true): void {
         this.lobby.forEach(player => {
             this.game.assignPlayer(player)
         })
-        this.game.setup()
+        this.lobby = []
+        this.game.setup(4, shuffle)
     }
 
     playCard(socket_id: string, card_id: string): void {

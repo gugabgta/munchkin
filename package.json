@@ -4,7 +4,7 @@
   "description": "Munchking card game back end",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --force-exit --silent",
     "watch": "tsc --watch --project .",
     "dev": "node dist/index.js",
     "build": "tsc -p tsconfig.build.json"

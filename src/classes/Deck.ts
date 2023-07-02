@@ -12,6 +12,7 @@ class Deck {
         this.treasure = []
         this.treasure_discard = []
     }
+
     push(card: Card): void {
         if (card.category === Category.Door) {
             this.door.push(card)
@@ -21,6 +22,7 @@ class Deck {
             this.treasure.push(card)
         }
     }
+
     shuffle(category: Category = Category.Any): void {
         if (category === Category.Any) {
             this.door = Helpers.shuffle(this.door)
@@ -35,6 +37,7 @@ class Deck {
             this.treasure = Helpers.shuffle(this.treasure)
         }
     }
+
     pushToDiscard(card: Card): void {
         if (card.category === Category.Door) {
             this.door_discard.push(card)
@@ -43,6 +46,14 @@ class Deck {
         if (card.category === Category.Treasure) {
             this.treasure_discard.push(card)
         }
+    }
+
+    length(): number {
+        return this.door.length + this.treasure.length
+    }
+
+    discardLength(): number {
+        return this.door_discard.length + this.treasure_discard.length
     }
 }
 

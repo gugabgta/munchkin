@@ -1,48 +1,56 @@
-import { connect } from "http2"
-import { Card } from "../src/classes/Card"
-import { Deck } from "../src/classes/Deck"
-import Game from "../src/classes/Game"
 import { Helpers } from "../src/classes/Helpers"
-import { Player } from "../src/classes/Player"
-import { JsonParser } from "../src/parsers/JsonParser"
-import * as fs from 'fs'
-import { io as clientConnection } from "socket.io-client";
 import { faker } from '@faker-js/faker';
+import { setup_game, client_connections } from "./models/game"
+import setup_deck from "./models/deck"
 
-describe('lobby', () => {
-    let cards: Array<Card> = JSON.parse(fs.readFileSync('cards/sampleCards.json', 'utf8'))
-    let game: Game
-    let io: any
-    let connections: Array<any>
+let io: any
+let players: number = 0
+const initial_deck_length: number = setup_deck.door.length + setup_deck.treasure.length
 
-    cards = new JsonParser().parse(cards)
-    const deck = new Deck()
+test ('initial deck length', () => {
+    expect(initial_deck_length).toBe(35)
+})
 
-    cards.forEach(card => {
-        deck.push(card)
+beforeAll((done) => {
+    io = setup_game.sh.io
+    players = client_connections.length
+    client_connections.forEach((socket) => socket.on('connect', done))
+})
+
+afterAll(() => {
+    io.close()
+})
+
+test('client join lobby', async () => {
+    client_connections.forEach((socket) => {
+        socket.emit('join', socket.id, faker.person.firstName())
     })
+    await Helpers.sleep(100)
+    expect(setup_game.sh.lobby.length).toBe(players)
+})
 
-    beforeAll((done) => {
-        game = new Game(deck)
-        io = game.sh.io
-        connections = [
-            clientConnection('http://localhost:3000'),
-            clientConnection('http://localhost:3000'),
-            clientConnection('http://localhost:3000'),
-            clientConnection('http://localhost:3000'),
-        ]
-        connections.forEach((socket) => socket.on('connect', done))
+test('client disconnect', async () => {
+    client_connections[0].disconnect()
+
+    await Helpers.sleep(100)
+    expect(setup_game.sh.lobby.length).toBe(players - 1)
+})
+
+test('start game', () => {
+    setup_game.sh.startGame(false)
+    expect(setup_game.players.length).toBe(players - 1)
+    expect(setup_game.sh.lobby.length).toBe(0)
+})
+
+test('send cards to client', async () => {
+    client_connections.forEach((socket) => {
+        socket.emit('showCards', socket.id)
     })
-
-    afterAll(() => {
-        io.close();
-    });
-
-    test('client join lobby', async () => {
-        connections.forEach((socket) => {
-            socket.emit('join', socket.id, faker.person.firstName())
-        })
-        await Helpers.sleep(500)
-        expect(game.sh.lobby.length).toBe(4)
-    })
+    await Helpers.sleep(100)
+    expect(setup_game.sh.lobby.length).toBe(0)
+    expect(setup_game.players[0].cards[0].title).toBe('Warrior7')
+    expect(setup_game.players[0].cards.length).toBe(8)
+    expect(setup_game.players[1].cards.length).toBe(8)
+    expect(setup_game.players[2].cards.length).toBe(8)
+    expect(setup_game.deck.length()).toBe(initial_deck_length - (setup_game.players.length * 8))
 })

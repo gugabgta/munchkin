@@ -6,7 +6,7 @@ import * as fs from 'fs'
 let cards: Array<Card> = JSON.parse(fs.readFileSync('cards/sampleCards.json', 'utf8'))
 cards = new JsonParser().parse(cards)
 
-const deck = new Deck()
+const deck: Deck = new Deck()
 const total_cards = cards.length
 
 cards.forEach(card => {
@@ -15,21 +15,21 @@ cards.forEach(card => {
 
 test('total cards in sample file', () => {
     expect(cards.length).toBeGreaterThan(0)
-    expect(total_cards).toBe(22)
+    expect(total_cards).toBe(35)
 })
 
 test('total cards in deck', () => {
-    expect(deck.door.length + deck.treasure.length).toBe(total_cards)
+    expect(deck.length()).toBe(total_cards)
 })
 
 test('no cards discarded', () => {
-    expect(deck.door_discard.length + deck.treasure_discard.length).toBe(0)
+    expect(deck.discardLength()).toBe(0)
 })
 
 test('card drawing', () => {
     deck.treasure.pop()!
     deck.door.pop()!
-    expect(deck.treasure.length + deck.door.length).toBe(total_cards - 2)
+    expect(deck.length()).toBe(total_cards - 2)
 })
 
 test('adding to discard', () => {

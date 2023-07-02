@@ -202,5 +202,122 @@
         "power": 0,
         "expansion": "Vanilla",
         "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior2",
+        "category": "Door",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior3",
+        "category": "Door",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior4",
+        "category": "Door",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior5",
+        "category": "Door",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior6",
+        "category": "Door",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior7",
+        "category": "Door",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior8",
+        "category": "Treasure",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior9",
+        "category": "Treasure",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior10",
+        "category": "Treasure",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior11",
+        "category": "Treasure",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior12",
+        "category": "Treasure",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior13",
+        "category": "Treasure",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
+    },
+    {
+        "type": "Field",
+        "title": "Warrior14",
+        "category": "Treasure",
+        "description": "Warrior",
+        "power": 0,
+        "expansion": "Vanilla",
+        "effect": "Warrior"
     }
 ]

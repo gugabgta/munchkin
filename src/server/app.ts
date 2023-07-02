@@ -4,12 +4,6 @@ import { Server } from "socket.io";
 import { Card } from "../classes/Card"
 
 const app = express();
-const httpServer = createServer(app);
-const server_options = {
-    cors: {
-        origin: true // ["http://localhost:8080", "http://localhost:8081"]
-    }
-}
 
 interface ServerToClientEvents {
     noArg: () => void
@@ -21,9 +15,16 @@ interface ServerToClientEvents {
     playCard: (socket_id: string, card_id: string) => void
 }
 
-const io = new Server<ServerToClientEvents>(httpServer, server_options);
+function io(port = 3000) {
+    const httpServer = createServer(app);
+    const server_options = {
+        cors: {
+            origin: true // ["http://localhost:8080", "http://localhost:8081"]
+        }
+    }
 
-httpServer.listen(3000);
+    httpServer.listen(port);
+    return new Server<ServerToClientEvents>(httpServer, server_options);
+}
 
 export default io
-export { httpServer }
